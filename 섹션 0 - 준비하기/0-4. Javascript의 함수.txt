@@ -1,0 +1,15 @@
+1. 함수의 입력 => 파라미터(parameters), 인자(arguments)
+
+2. JS에서의 함수 정의 방법
+- function statement를 사용
+(ex)
+function sum(a, b) {
+  return a + b;
+}
+console.log(sum(10, 20));     // 함수 호출 결과: 30
+
+- arrow function expression을 사용
+const multiply = (a, b) => {
+  return a * b;
+}
+console.log(multifly(10, 20));     // 함수 호출 결과: 200

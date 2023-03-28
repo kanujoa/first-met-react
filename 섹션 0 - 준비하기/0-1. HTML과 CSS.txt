@@ -1,0 +1,5 @@
+1. SPA (Single Page Application) : 하나의 페이지만 존재하는 웹사이트(웹 애플리케이션)(html 파일이 단 하나!)   --> React와 관련!
+   <-> Multi Page Application: 사용자가 페이지를 요청할 때마다 새로운 페이지다 로드됨. (html 파일이 여러개!) 
+
+   SPA 방식을 이용하면 처음에 <body> tag 안에 내용이 텅 비어있지만 사용자가 페이지에 접속할 때, 그 페이지에 해당하는 content만
+   가져와서 동적으로 <body> tag 내부를 채워넣게 된다. 이 채워넣는 역할을 React가 한다.
