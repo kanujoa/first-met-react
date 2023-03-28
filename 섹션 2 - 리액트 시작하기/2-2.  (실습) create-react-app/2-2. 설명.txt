@@ -1,0 +1,25 @@
+새로운 웹 사이트를 만들 때에는 처음부터 리액트가 적용이 되어 있는 상태로 시작하면 된다.
+--> 주로 create-react-app 을 사용한다.
+
+1. create-react-app (cra): 리액트로 웹 애플리케이션을 개발하는 데 필요한 모든 설정이 되어 있는 상태로 프로젝트를 생성해 주는 도구
+    - 조건: VS Code를 사용해야 하며, Node.js 14.0.0 이상, npm v6.14.0 이상이어야 함.
+
+
+2. create-react-app 실행하기 : npx 명령어 이용
+* npx(excute npm package binaries) : npm 패키지를 설치한 이후 곧바로 실행까지 해주는 명령어
+   --> 패키지를 정해진 위치에 설치하고 찾아서 실행하려면 번거로우므로 간편하게 한번에 처리를 위해 사용한다.
+
+- 사용 형식
+$ npx create-react-app <프로젝트 이름>
+
+현재 프로젝트의 경우 powershell에 이렇게 적용하면 된다. (VS Code 터미널에 입력하면 된다.)
+npx create-react-app my-app
+
+설치가 완료되면 애플리케이션을 실행할 수 있는 명령어들에 대한 안내가 뜬다.
+
+
+3. 명령어 살펴보기
+- cd <프로젝트 이름> : 경로 변경 (change directory)
+- npm start : 애플리케이션 실행     
+(ex) cd my-app
+     npm start     --> 사용하면 localhost:3000으로 페이지 이동 (localhost: 현재 내가 사용하고 있는 컴퓨터 -> 리액트 애플리케이션이 로컬 개발환경에서 실행 중)
