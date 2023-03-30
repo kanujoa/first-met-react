@@ -1,0 +1,37 @@
+1. React Element의 특징
+- 불변성 (immutable) : Element 생성 후 children이나 attribute를 바꿀 수 없다.
+   --> 화면에 변경된 Element를 보여주고 싶다면 새로운 Element를 만들어 기존 Element와 바꿔치기 한다.
+
+
+2. Element 렌더링하기
+* Root DOM Node : <div id="root"></div>     
+--> 모든 리액트 앱에 들어가는 아주 중요한 코드, div 태그 안에 있는 내용들은 모두 React DOM에 의해 관리됨.
+--> 새로운 리액트 웹사이트를 만들면 Root DOM Node는 하나일 수 있지만 기존 웹사이트에 React를 추가적으로 연동할 경우 여러 개의 분리된 수많은 Root
+    DOM Node를 가지게 될 수도 있다.
+
+- render 함수를 이용해 Element를 렌더링한다.
+[ex]
+const element = <h1>안녕 리액트!</h1>;     --> Element 생성!
+ReactDOM.render(element, document.getElementById('root'));    
+--> render 함수는 첫번째 파라미터인 React Element(React의 virtual DOM에 존재)를 두번째 파라미터인 DOM Element(실제 브라우저의 DOM에 존재)에 
+    렌더링하는 역할을 한다.
+--> 즉, React Element가 렌더링되는 과정은 virtual DOM에서 실제 DOM으로 이동하는 과정이라고 할 수 있다.
+
+
+3. 렌더링된 Element를 업데이트하기
+- React Element의 불변성 때문에 새로 Element를 만들어야 한다!
+[ex]
+function tick() {     --> 현재 시간을 렌더링하는 함수
+  const element = (
+    <div>
+      <h1>안녕, 리액트!</h1>
+      <h2>현재 시간: {new Date().toLocalTimeString()}</h2>
+    </div>
+  );
+
+  ReactDOM.render(element, document.getElementById('root'));
+}
+
+setInterval(tick, 1000);      --> 1초마다 렌더링함. 이때, tick 함수를 호출할 때마다 기존 Element를 변경하는 것이 아니라 새로운 Element를 생성
+                                  하여 기존에 있던 Element와 바꿔치기 하는 것이다!
+크롬 개발자 창에서 보면 결과적으로 갱신되는 부분에서만 반짝이는 효과가 나타난다.
