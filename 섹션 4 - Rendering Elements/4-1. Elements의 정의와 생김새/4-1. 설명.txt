@@ -1,0 +1,122 @@
+1. Element : 리액트 앱을 구성하는 가장 작은 블록들 (React 공식문서)
+
+2. DOM Elements: HTML 요소들 (개발자 도구를 켜면 보이는 문서 안의 요소들, 이렇게 실제로 화면에서 보는 것 가능)
+
+3. 초창기에는 화면에 나타나는 내용을 기술하는 자바스크립트 객체를 Descriptor라는 이름으로 불렀다.
+   but descriptor가 최종적으로 나타나는 형태는 DOM Element였기 때문에 DOM과의 통일성을 위해 Element라고 부르기로 결정했다.
+   따라서 React Elements는 DOM Elements의 가상 표현이라고 부를 수 있다. (React Elements는 Virtual DOM에 존재)
+   DOM Elements가 React Elements에 비해 많은 정보를 담고 있어 상대적으로 크고 무겁다.
+
+4. React Elements는 화면에서 보이는 것들을 기술한다. React Elements를 토대로 DOM Elements가 만들어지게 된다.
+- React Elements는 자바스크립트 객체 형태로 존재한다.  
+  --> 컴포넌트 유형과 속성 및 웹의 모든 자식에 대한 정보를 포함하고 있는 일반적인 자바스크립트 객체
+  --> 이 객체는 불변성을 가지고 있어 한 번 생성되면 변경할 수 없다.
+
+React Elements [ex] 버튼 생성
+{
+  type: 'button',     --> type에 HTML tag 이름이 문자열로 들어감.: Element는 해당 태그 이름을 가진 DOM 노드를 나타낸다. (여기서는 <button>)
+  props: {     --> props는 속성에 해당
+    className: 'bg-green',  
+    children: {
+      type: 'b',
+      props: {
+        children: 'Hello, element!'
+      }
+    }
+  }
+}
+
+위 React Element가 랜더링이 된다면 다음과 같은 DOM Element가 될 것이다.
+<button class='bg-green'>
+  <b>
+    Hello, element!
+  </b>
+</button>
+
+- React Element의 type에 문자열이 아닌 리액트 컴포넌트 이름이 들어가는 경우
+=> 모든 리액트 컴포넌트는 최종적으로 HTML tag를 사용하게 되어 있다. 하나의 컴포넌트는 여러 개의 자식 컴포넌트로 구성되어 있고 이를 계속 분해하다
+   보면 HTML 요소가 나오게 된다.
+[ex 1]
+{
+  type: Button,      --> 주목! 
+  props: {
+    color: 'green',
+    children: 'Hello, element!'
+  }
+}
+
+* createElement 함수의 파라미터
+React.createElement(
+  type,     --> HTML tag명이나 또 다른 리액트 컴포넌트가 들어가게 됨.
+  [props],     --> Element의 속성 (ex) class, style 등) attribute보다 좀 더 상위 개념임.
+  [...children]     --> 해당 Element의 자식 Element들이 이 자리에 들어가게 된다.
+)
+
+[ex 2]
+function Button(props) {
+  return (
+    <button className={`bg-${props.color}`}>
+      <b>
+        {props.children}
+      </b>
+    </button>
+  )
+}
+
+function ConfirmDialog(props) {
+  return (
+    <div>
+      <p>내용을 확인하셨으면 확인 버튼을 눌러주세요.</p>
+      <Button color='green'>확인</Button>     --> 주목! ConfirmDialog 컴포넌트가 Button 컴포넌트를 포함하고 있다.
+    </div>
+  )
+}
+
+ConfirmDialog의 Element는 다음과 같은 형태가 될 것이다.
+{
+  type: div,
+  props: {
+    children: [
+      {
+        type: 'p',     --> 주목! 첫번째 children type이 HTML tag인 p이기 때문에 곧바로 렌더링이 가능한 상태이다.
+        props {
+          children: '내용을 확인하셨으면 확인 버튼을 눌러주세요.'
+        }
+      },
+      {
+        type: Button,      --> 주목! 두번째 children type은 리액트 컴포넌트 이름이기 때문에 이 경우에 React는 Button 컴포넌트의 Element를 생성해서 합친다. 
+        props: {
+          color: 'green',
+          children: '확인'
+        }
+      }
+    ]
+  }
+}
+
+최종적인 Element의 형태는 다음과 같이 된다.
+{
+  type: div,
+  props: {
+    children: [
+      {
+        type: 'p',     
+        props {
+          children: '내용을 확인하셨으면 확인 버튼을 눌러주세요.'
+        }
+      },
+      {     --> 여기서부터
+        type: 'button',      
+        props: {
+          className: 'bg-green',
+          children: {
+            type: 'b',
+            props: {
+              children: '확인'
+            }     --> 여기까지 주목!
+          }
+        }
+      }
+    ]
+  }
+}
