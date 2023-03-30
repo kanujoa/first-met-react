@@ -1,0 +1,63 @@
+<JSX의 장점>
+1. 코드가 간결해진다.
+JSX 사용 (ex)
+<div>Hello, {name}</div>
+JSX 사용 X (ex)
+React.createElement('div', null, `Hello, ${name}`);     --> createElement 파라미터인 type, [props], [...childeren] 사용함!
+
+2. 가독성이 향상된다. -> 버그 발견 더 쉬워짐!
+
+3. Injection Attacks 방어 -> 보안성 증가
+* Injection Attacks: 소스 코드를 입력해 해당 코드가 실행되도록 만드는 해킹 방법
+기본적으로 React DOM은 embeding된 값을 모두 문자열로 변환하여 명시적으로 선언되지 않은 값은 괄호(tag)사이에 들어갈 수 없다.
+
+
+<JSX 사용하기>
+1. 형식: ...XML/HTML 코드 {JavaScript 코드} ... XML/HTML 코드
+[ex1]
+const name = '소플';
+const element = <h1>안녕, {name}</h1>;     --> 주목!
+
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+
+[ex2]
+function formatName(user) {
+  return user.firstName + ' ' + user.lastName;
+}
+
+const user = {
+  firstName: 'Inje',
+  lastName: 'Lee'
+}
+
+const element = {
+  <h1>
+    Hello, {formatUser(user)}
+  </h1>
+}
+
+ReactDOM.render(
+  element,
+  document.getElementById('root')
+);
+
+2. tag의 속성(attribute)에 값을 넣는 방법: 큰따옴표 사이에 문자열을 넣거나 중괄호 사이에 자바스크립트 코드를 넣으면 된다.
+[ex1]
+const element = <div tabIndex="0"></div>;
+
+[ex2]
+const element = <img src={user.avatarUrl}></img>
+
+중괄호가 들어가면 그 부분은 자바스크립트 코드라고 생각하면 된다!
+
+3. 자식(children)을 정의하는 방법: HTML에서와 같이 상위 tag와 하위 tag를 사용하면 된다.
+[ex]
+const element = (
+  <div>
+    <h1>안녕하세요</h1>     --> <div>의 children <h1>
+    <h2>열심히 리액트를 공부해 봅시다!</h2>     --> <div>의 children <h2>
+  </div>
+)

@@ -1,0 +1,32 @@
+1. JSX(Javascript + XML/HTML) : A syntax extension to Javascript (자바스크립트의 확장 문법)
+- JSX 코드 (ex) => const element = <h1>Hello, world!</h1>     (자바스크립트 코드와 HTML 코드가 합쳐져 있다.)
+
+2. JSX의 역할
+- JSX는 내부적으로 HTML, XML 코드를 자바스크립트 코드로 변환하는 과정을 거친다. 따라서 우리가 JSX 코드로 작성해도 최종적
+  으로는 자바스크립트 코드가 나오게 된다.
+  => React의 createElement라는 함수가 JSX 코드를 자바스크립트 코드로 변환시키는 역할을 한다.
+    JSX를 사용한 코드 (ex)
+    const element = (
+      <h1 className="greeting">     --> 주목!
+        Hello, world!
+      </h1>
+    )
+    JSX를 사용하지 않은 코드 (JS 코드) (ex)
+    const element = React.createElement (     --> 주목!
+      'h1',     --> createElement 함수의 첫번째 파라미터: type(유형) ex) HTML 태그, 다른 리액트 컴포넌트 등
+      {className: 'greeting'},     --> createElement 함수의 두번째 파라미터: [props] (속성들)
+      'Hello, world!'     --> createElement 함수의 세번째 파라미터: [...children] (현재 element의 자식 element들)
+    )
+  => React.createElement()의 결과로 자바스크립트 객체(React element)가 생성된다. React는 이 객체를 읽어 DOM을 만드는 데
+     사용하고 항상 최신 상태로 유지한다.
+  위의 코드 (결과)
+  const element = {
+    type: 'h1',     
+    props: {
+      className: 'greeting',
+      children: 'Hello, world!'
+    }
+  }
+
+- 리액트에서 JSX를 사용하는 것이 필수는 아님. but JSX를 사용하면 가독성이 높아지고 생산성도 높아지기 때문에 JSX를 사용하는
+  것을 권장함.
