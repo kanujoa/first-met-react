@@ -1,0 +1,73 @@
+<props의 중요한 특징>
+1. Read-only: 읽을 수만 있다. => 값을 변경할 수 없다.
+- 다른 props의 값으로 element를 생성하려면?
+  : 새로운 값을 컴포넌트에 전달하여 새로 Element를 생성한다. 이 과정에서 Element가 다시 랜더링된다.
+
+* JS에서의 함수 살펴보기
+- pure 함수: 입력값(input)을 변경하지 않으며, 같은 입력값에 대해서는 항상 같은 출력값(output)을 return함.
+[ex] 
+function sum(a, b) {
+    return a + b;
+}
+- impure 함수: 입력값(input)을 변경
+[ex] 계좌에서 출금하는 함수
+function withdraw(account, amount) {
+  account.total -= amount;     // 입력된 account의 total 값에서 amount를 뺀 값으로 account.total 값이 변경된다.
+} 
+
+- 모든 리액트 컴포넌트는 그들의 Props에 관해서는 Pure 함수 같은 역할을 해야 한다.
+  == 모든 리액트 컴포넌트는 Props를 직접 바꿀 수 없고, 같은 Props에 대해서는 항상 같은 결과(항상 같은 Element를 return)를 
+     보여줄 것!
+
+
+<Props 사용법>
+Props는 Component에 전달할 다양한 정보를 담고 있는 'JAVASCRIPT 객체'라고 하였다!
+따라서 Component에 Props를 넣을 때는 key와 value 형태로 넣을 수 있다.
+[ex 1]
+function App(props) {
+  return (
+    <Profile
+      name="소플"     // 첫번째 속성
+      introduction="안녕하세요, 소플입니다."     // 두번째 속성
+      viewCount={1500}     // 세번째 속성, 중괄호를 사용하면 안에 JS 코드가 들어가는 것! (정수, 변수, 다른 컴포넌트 등이 들어갈 때는 중괄호를 이용하여 감싸주어야 함.)
+    />
+  )
+}
+
+위에서 입력한 props는 아래와 같은 JS 객체 형태가 된다.
+{ 
+  name: "소플",
+  introduction: "안녕하세요, 소플입니다.",
+  viewCount: 1500
+}
+
+* jsx 코드를 JS로 작성해볼 경우 (React.createElement 이용!)
+React.createElement(
+  Profile,     --> type
+  {      --> [props]
+    name: "소플",
+    introduction: "안녕하세요, 소플입니다.",
+    viewCount: 1500
+  },
+  null     --> [..children]
+)
+but 되도록 jsx 형태를 사용하기!
+
+[ex 2] 
+Props의 값 작성 부분에 중괄호를 사용하여 다음과 같이 Props의 값으로 컴포넌트도 넣을 수 있다.
+function App(props) {
+  return (
+    <Layout
+      width={2560}
+      height={1440}
+      header={
+        <Header title="소플의 블로그입니다." />     // 주목! (header가 아닌 Header(대문자)로 적었으므로 component!)
+      }
+      footer={
+        <Footer />      // 주목!
+      }
+    />
+  )
+}
+--> 결과적으로 Layout 컴포넌트의 props로 width로 2560, height으로 1440, header로 React Element인 Header, footer로 react
+    Element인 Footer가 들어갈 수 있다. 
