@@ -1,0 +1,61 @@
+State는 class 컴포넌트와 function 컴포넌트 둘 다에서 사용됨. 리액트의 핵심이므로 중요!
+Lifecycle은 주로 class 컴포넌트에서 사용하는 개념인데 요즘에는 class 컴포넌트를 거의 사용하지 않기 때문에 잠깐 살펴보고 넘어가기
+
+<State>
+1. 리액트에서의 State는 리액트 컴포넌트의 상태 
+  --> 리액트 Component의 변경 가능한 데이터를 말함.
+
+2. state는 리액트 컴포넌트를 개발하는 개발자가 직접 정의함. 
+- state 정의 시 중요한 점은 렌더링이나 데이터 흐름에 사용되는 값만 state에 포함시켜야 한다는 것!
+  --> state가 변경될 경우 컴포넌트가 재렌더링되기 때문에 렌더링과 데이터 흐름에 관련 없는 값을 포함하면 불필요한 경우에 컴포
+      넌트가 재렌더링되어 성능 저하가 발생할 수 있기 때문이다.
+- 렌더링이나 데이터 흐름에서 벗어나는 값들은 컴포넌트에 instance field로 정의하면 된다.
+
+- state는 JS 객체이다.
+
+Class Component에서의 state [ex]
+class LikeButton extends React.Component {
+  constructor(props) {     --> 생성자: class가 실행될 때 실행되는 함수
+    super(props);
+
+    this.state = {     --> 이 부분이 현재 컴포넌트의 state를 정의하는 부분!
+      liked: false     --> class Component의 경우 state를 생성자에서 정의한다.
+    };
+  }
+  ...
+}
+
+3. state는 JS 변수를 다룰 때처럼 직접 수정 불가! (수정이 가능하긴 하지만 막 수정하면 안된다!)
+
+잘못된 state 수정 [ex]
+this.state = {
+  name: 'Inje'
+};
+--> 위와 같이 수정하면 state는 렌더링과 관련이 있기 때문에 의도하지 않은 결과를 볼 수 있다. 따라서 class를 수정할 때는 꼭 아래와
+    같이 setState를 이용하여 수정해야 한다.
+
+정상적인 state 수정 (setState 함수 이용) [ex]
+this.setState({
+  name: 'Inje'
+});
+
+
+<Lifecycle>
+* 리액트의 생명주기: Component가 생성되는 시점과 사라지는 시점이 정의되어 있다는 의미이다.
+                   --> Component가 계속 존재하는 것이 아닌, 시간의 흐름에 따라 생성되고 업데이트되다가 사라진다.
+                   --> class 컴포넌트와 function 컴포넌트 모두에 해당!
+
+1. Mount(출생)
+- 생성자(constructor) 실행
+- 컴포넌트가 렌더링되며 이후에 componentDidMount 함수가 호출된다.
+
+2. Updating(인생)
+- 컴포넌트의 props가 변경되거나 setState() 함수 호출에 의해 state가 변경되거나 forceUpdate()라는 강제 업데이트 함수 호출로 인해
+  컴포넌트가 다시 렌더링된다.
+- 렌더링 이후에 componentDidUpdate 함수가 호출된다.
+
+3. Unmounting(사망)
+- 상위 컴포넌트에서 현재 컴포넌트를 더 이상 화면에 표시하지 않게 될 때 Unmount된다고 볼 수 있다.
+- Unmount 직전에 componentWillUnmount 함수가 실행됨.
+
+* 다른 생명주기 함수도 존재하지만 지금은 class 컴포넌트를 거의 사용하지 않기 때문에 다루지 않음.
